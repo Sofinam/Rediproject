@@ -4,39 +4,42 @@ class Library:
         self.books = books
 
     def list_books(self):
-        print('Books in the library.')
+        print("\nBooks in the library: ")
         for book in self.books:
-            print(book)
+            print(f"- {book}")
 
     def add_book(self, book):
-        print("Book added to the library.")
-        self.books.insert(o,add_book)
+        if book in self.books:
+            print(f"The book '{book}' is already in the library.")
+        else:
+            self.books.append(book)
+            print(f"The book'{book}' is added to the library.")
 
     def borrow_book(self, borrow_book):
-        for borrow_book in self.books:
-            print("You have borrowed a book")
-            self.books.remove(borrow_book)
+        if book in self.books:
+            self.books.remove(book)
+            print(f"You have borrowed a book '{book}'.")
+        else:
+            print(f"The book '{book}' is not available.")
 
-    def receive_book(self, receive_book):
-        print("You have returned a book")
-        self.books.append(receive_book)
+    def return_book(self, book):
+        if book not in self.books:
+            self.books.append(book)
+            print("Thank you for returning the book '{book}'.")
+        else:
+            print(f"The book '{book}' is already in the library")
 
-    def delete_book(self, delete_book):
-        print("Book name is deleted")
-        self.books.remove(delete_book)
+    def delete_book(self, book):
+        if book in self.books:
+            self.books.remove(book)
+            print(f"The book '{book}' has been deleted.")
+        else:
+            print(f"The book '{book}' is not our library.")
 
 
-books = ['Jane Eyre, Recipe for disaster, My children have faces, Things fall apart']
-o = Library(books)
-
-
-
-
-    #create an instance of list of books
-#book1 = Book("Jane Eyre", "Charlotte Bronte")
-#book2 = Book("Recipe for disaster", "Lilian Tindyebwa")
-#book3 = Book("My children have faces", "Carol Campbell")
-#book4 = Book("Things fall apart", "Chinua Achebe")
+#library is initialised with books
+books = ['Jane Eyre, Recipe for disaster, My children have faces, Things fall apart, I will marry when I want, No longer at ease']
+library = Library(books)
 
 
 msg = """
@@ -49,24 +52,34 @@ msg = """
 """
 while True:
     print(msg)
-    choice = int(input("Enter your choice: "))
+    try:
+        choice = int(input("Enter your choice: "))
+    except ValueError:
+        print("Invalid input! Enter a number between 1 and 6.")
+        continue
+
     if choice == 1:
-        o.list_books()
+        library.list_books()
     elif choice == 2:
-        book = input("Enter Book Name:")
-        o.add_book(book)
+        book = input("Enter Book Name: ")
+        library.add_book(book.strip())
 
     elif choice == 3:
         book = input("Enter the Book Name to Borrow: ")
-        o.borrow_book(book)
+        library.borrow_book(book.strip())
 
     elif choice == 4:
         book = input("Enter book returned: ")
-        o.receive_book(book)
+        library.return_book(book.strip())
 
     elif choice == 5:
         book = input("Enter Deleted Book: ")
-        o.delete_book(book)
+        library.delete_book(book.strip())
+    elif choice == 6:
+        print("Thank you for using our library. ")
+        break
+    else:
+        print("Invalid choice! Enter a number between 1 and 6.")
 
 
 
